@@ -1,4 +1,5 @@
 import Snake from '../models/snake.js';
+import { SNAKE } from '../constants.js';
 
 export default class SnakeController {
 	constructor(context, boardController, snakeBody, snakeHead) {
@@ -6,10 +7,10 @@ export default class SnakeController {
 		this.render(context, boardController, snakeBody, snakeHead);
 	}
 	init(boardController) {
-		this.deltaX = 0;
-		this.deltaY = -1;
+		this.deltaX = SNAKE.initialDirection.deltaX;
+		this.deltaY = SNAKE.initialDirection.deltaY;
 		this.snake = new Snake();
-		this.degree = 180;
+		this.degree = SNAKE.initialDegree;
 
 		for (let coord of this.snake.snakeStartCoords) {
 			let cell = boardController.getCell(coord.x, coord.y);

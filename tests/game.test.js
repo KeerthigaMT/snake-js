@@ -45,7 +45,15 @@ describe('Game - Characterization Tests', () => {
 			return { width: 10, height: 10, src: '', addEventListener: vi.fn() };
 		});
 		global.Audio = vi.fn(function () {
-			return { src: '', loop: false, volume: 1, load: vi.fn(), play: vi.fn(), pause: vi.fn(), addEventListener: vi.fn() };
+			return {
+				src: '',
+				loop: false,
+				volume: 1,
+				load: vi.fn(),
+				play: vi.fn(),
+				pause: vi.fn(),
+				addEventListener: vi.fn(),
+			};
 		});
 	});
 
