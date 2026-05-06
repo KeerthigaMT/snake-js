@@ -26,19 +26,31 @@ export default class Game {
 		this.background = await this.preloadImage(
 			'https://jsdevspace.github.io/snake-js/images/background.png',
 			0,
-			0,
+			0
 		);
 		this.cell = await this.preloadImage('https://jsdevspace.github.io/snake-js/images/cell.png');
 		this.food = await this.preloadImage('https://jsdevspace.github.io/snake-js/images/food.png');
-		this.snakeBody = await this.preloadImage('https://jsdevspace.github.io/snake-js/images/body.png');
-		this.snakeHead = await this.preloadImage('https://jsdevspace.github.io/snake-js/images/head.png');
+		this.snakeBody = await this.preloadImage(
+			'https://jsdevspace.github.io/snake-js/images/body.png'
+		);
+		this.snakeHead = await this.preloadImage(
+			'https://jsdevspace.github.io/snake-js/images/head.png'
+		);
 		this.bomb = await this.preloadImage('https://jsdevspace.github.io/snake-js/images/bomb.png');
 	}
 	async preloadSounds() {
-		this.bombSound = await this.preloadSound('https://jsdevspace.github.io/snake-js/sounds/bomb.wav');
-		this.foodSound = await this.preloadSound('https://jsdevspace.github.io/snake-js/sounds/food.wav');
-		this.gameOverSound = await this.preloadSound('https://jsdevspace.github.io/snake-js/sounds/game-over.wav');
-		this.snakeSound = await this.preloadSound('https://jsdevspace.github.io/snake-js/sounds/snakecharmer.wav');
+		this.bombSound = await this.preloadSound(
+			'https://jsdevspace.github.io/snake-js/sounds/bomb.wav'
+		);
+		this.foodSound = await this.preloadSound(
+			'https://jsdevspace.github.io/snake-js/sounds/food.wav'
+		);
+		this.gameOverSound = await this.preloadSound(
+			'https://jsdevspace.github.io/snake-js/sounds/game-over.wav'
+		);
+		this.snakeSound = await this.preloadSound(
+			'https://jsdevspace.github.io/snake-js/sounds/snakecharmer.wav'
+		);
 		this.snakeSound.loop = true;
 		this.snakeSound.volume = 0.1;
 	}
@@ -69,7 +81,7 @@ export default class Game {
 				() => {
 					resolve(sound);
 				},
-				{ once: true },
+				{ once: true }
 			);
 			sound.addEventListener('error', () => {
 				reject(new Error("Couldn't load sound"));
@@ -84,7 +96,7 @@ export default class Game {
 			this.context,
 			this.boardController,
 			this.snakeBody,
-			this.snakeHead,
+			this.snakeHead
 		);
 		this.boardController.addObject(this.snakeController, 'food');
 		this.boardController.addObject(this.snakeController, 'bomb');
@@ -130,19 +142,13 @@ export default class Game {
 		this.context.drawImage(
 			this.background,
 			(this.width - this.background.width) / 2,
-			(this.height - this.background.height) / 2,
+			(this.height - this.background.height) / 2
 		);
 	}
 	resizeCanvas() {
-		this.minWidth =
-			(this.boardController.board.boadWidth + 1) * (this.cell.width + 1);
-		this.minHeight =
-			(this.boardController.board.boadHeight + 1) *
-			(this.cell.height + 1);
-		if (
-			window.innerWidth / window.innerHeight >
-			this.maxWidth / this.maxHeight
-		) {
+		this.minWidth = (this.boardController.board.boadWidth + 1) * (this.cell.width + 1);
+		this.minHeight = (this.boardController.board.boadHeight + 1) * (this.cell.height + 1);
+		if (window.innerWidth / window.innerHeight > this.maxWidth / this.maxHeight) {
 			this.fitWidth();
 		} else {
 			this.fitHeight();
@@ -151,56 +157,28 @@ export default class Game {
 		this.context.canvas.height = this.height;
 		this.drawBackground();
 		this.boardController &&
-			this.boardController.render(
-				this.context,
-				this.cell,
-				this.food,
-				this.bomb,
-			);
+			this.boardController.render(this.context, this.cell, this.food, this.bomb);
 	}
 	fitWidth() {
-		this.height = Math.round(
-			(this.width * window.innerHeight) / window.innerWidth,
-		);
+		this.height = Math.round((this.width * window.innerHeight) / window.innerWidth);
 		this.height = Math.min(this.height, this.maxHeight);
 		this.height = Math.max(this.height, this.minHeight);
-		this.width = Math.round(
-			(window.innerWidth * this.height) / window.innerHeight,
-		);
+		this.width = Math.round((window.innerWidth * this.height) / window.innerHeight);
 		this.canvas.style.width = '100%';
 	}
 	fitHeight() {
-		this.width = Math.round(
-			(window.innerWidth * this.maxHeight) / window.innerHeight,
-		);
+		this.width = Math.round((window.innerWidth * this.maxHeight) / window.innerHeight);
 		this.width = Math.min(this.width, this.maxWidth);
 		this.width = Math.max(this.width, this.minWidth);
-		this.height = Math.round(
-			(this.width * window.innerHeight) / window.innerWidth,
-		);
+		this.height = Math.round((this.width * window.innerHeight) / window.innerWidth);
 		this.canvas.style.height = '100%';
 	}
 	update() {
 		this.snakeController.move();
-		this.context.clearRect(
-			0,
-			0,
-			this.context.canvas.width,
-			this.context.canvas.height,
-		);
+		this.context.clearRect(0, 0, this.context.canvas.width, this.context.canvas.height);
 		this.drawBackground();
-		this.boardController.render(
-			this.context,
-			this.cell,
-			this.food,
-			this.bomb,
-		);
-		this.snakeController.render(
-			this.context,
-			this.boardController,
-			this.snakeBody,
-			this.snakeHead,
-		);
+		this.boardController.render(this.context, this.cell, this.food, this.bomb);
+		this.snakeController.render(this.context, this.boardController, this.snakeBody, this.snakeHead);
 		this.createScore();
 
 		if (this.snakeController.playBomb) {

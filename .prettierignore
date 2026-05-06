@@ -1,0 +1,14 @@
+# Build output
+dist/
+node_modules/
+coverage/
+
+# Forge artifacts
+.cursor/
+.forge/
+
+# Package files
+package-lock.json
+
+# Git
+.git/

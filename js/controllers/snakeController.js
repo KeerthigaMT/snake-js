@@ -1,4 +1,3 @@
-import Game from '../game.js';
 import Snake from '../models/snake.js';
 
 export default class SnakeController {
@@ -25,10 +24,8 @@ export default class SnakeController {
 				if (i === 0) {
 					context.save();
 					context.translate(
-						cell.x * boardController.cellWidth +
-							boardController.offsetX,
-						cell.y * boardController.cellheight +
-							boardController.offsetY,
+						cell.x * boardController.cellWidth + boardController.offsetX,
+						cell.y * boardController.cellheight + boardController.offsetY
 					);
 					context.translate(halfHeadSize, halfHeadSize);
 					context.rotate((this.degree * Math.PI) / 180);
@@ -37,10 +34,8 @@ export default class SnakeController {
 				} else {
 					context.drawImage(
 						snakeBody,
-						cell.x * boardController.cellWidth +
-							boardController.offsetX,
-						cell.y * boardController.cellheight +
-							boardController.offsetY,
+						cell.x * boardController.cellWidth + boardController.offsetX,
+						cell.y * boardController.cellheight + boardController.offsetY
 					);
 				}
 			});
@@ -73,9 +68,6 @@ export default class SnakeController {
 	}
 	getNextCell() {
 		let head = this.snake.snakeCoords[0];
-		return this.boardController.getCell(
-			head.x + this.deltaX,
-			head.y + this.deltaY,
-		);
+		return this.boardController.getCell(head.x + this.deltaX, head.y + this.deltaY);
 	}
 }
