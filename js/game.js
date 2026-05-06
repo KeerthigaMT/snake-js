@@ -1,5 +1,7 @@
 import BoardController from './controllers/boardController.js';
 import SnakeController from './controllers/snakeController.js';
+import AssetLoader from './infrastructure/assetLoader.js';
+import { AUDIO } from './constants.js';
 
 export default class Game {
 	constructor() {
@@ -18,76 +20,28 @@ export default class Game {
 		this.score = 0;
 	}
 	async preload() {
-		await this.preloadImages();
-		await this.preloadSounds();
+		const assetLoader = new AssetLoader({ context: this.context });
+		const { images, sounds } = await assetLoader.loadAll();
+
+		// Assign loaded images
+		this.background = images.background;
+		this.cell = images.cell;
+		this.food = images.food;
+		this.snakeBody = images.snakeBody;
+		this.snakeHead = images.snakeHead;
+		this.bomb = images.bomb;
+
+		// Assign loaded sounds
+		this.bombSound = sounds.bomb;
+		this.foodSound = sounds.food;
+		this.gameOverSound = sounds.gameOver;
+		this.snakeSound = sounds.snakeCharmer;
+
+		// Configure background music
+		this.snakeSound.loop = AUDIO.snakeSoundLoop;
+		this.snakeSound.volume = AUDIO.snakeSoundVolume;
+
 		this.create();
-	}
-	async preloadImages() {
-		this.background = await this.preloadImage(
-			'https://jsdevspace.github.io/snake-js/images/background.png',
-			0,
-			0
-		);
-		this.cell = await this.preloadImage('https://jsdevspace.github.io/snake-js/images/cell.png');
-		this.food = await this.preloadImage('https://jsdevspace.github.io/snake-js/images/food.png');
-		this.snakeBody = await this.preloadImage(
-			'https://jsdevspace.github.io/snake-js/images/body.png'
-		);
-		this.snakeHead = await this.preloadImage(
-			'https://jsdevspace.github.io/snake-js/images/head.png'
-		);
-		this.bomb = await this.preloadImage('https://jsdevspace.github.io/snake-js/images/bomb.png');
-	}
-	async preloadSounds() {
-		this.bombSound = await this.preloadSound(
-			'https://jsdevspace.github.io/snake-js/sounds/bomb.wav'
-		);
-		this.foodSound = await this.preloadSound(
-			'https://jsdevspace.github.io/snake-js/sounds/food.wav'
-		);
-		this.gameOverSound = await this.preloadSound(
-			'https://jsdevspace.github.io/snake-js/sounds/game-over.wav'
-		);
-		this.snakeSound = await this.preloadSound(
-			'https://jsdevspace.github.io/snake-js/sounds/snakecharmer.wav'
-		);
-		this.snakeSound.loop = true;
-		this.snakeSound.volume = 0.1;
-	}
-	async preloadImage(path, x = -100, y = -100) {
-		let image = new Image();
-		await new Promise((resolve, reject) => {
-			image.src = path;
-			image.addEventListener('load', () => {
-				window.requestAnimationFrame(() => {
-					this.context.drawImage(image, x, y);
-				});
-				resolve(image);
-			});
-			image.addEventListener('error', () => {
-				reject(new Error("Couldn't load image"));
-			});
-		});
-		return image;
-	}
-	async preloadSound(path) {
-		let sound = new Audio();
-		await new Promise((resolve, reject) => {
-			sound.src = path;
-			sound.loop = false;
-			sound.load();
-			sound.addEventListener(
-				'canplaythrough',
-				() => {
-					resolve(sound);
-				},
-				{ once: true }
-			);
-			sound.addEventListener('error', () => {
-				reject(new Error("Couldn't load sound"));
-			});
-		});
-		return sound;
 	}
 	create() {
 		this.boardController = new BoardController();
