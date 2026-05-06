@@ -36,8 +36,27 @@ export default class Game {
 	 * @async
 	 */
 	async preload() {
-		await this.preloadImages();
-		await this.preloadSounds();
+		const assetLoader = new AssetLoader({ context: this.context });
+		const { images, sounds } = await assetLoader.loadAll();
+
+		// Assign loaded images
+		this.background = images.background;
+		this.cell = images.cell;
+		this.food = images.food;
+		this.snakeBody = images.snakeBody;
+		this.snakeHead = images.snakeHead;
+		this.bomb = images.bomb;
+
+		// Assign loaded sounds
+		this.bombSound = sounds.bomb;
+		this.foodSound = sounds.food;
+		this.gameOverSound = sounds.gameOver;
+		this.snakeSound = sounds.snakeCharmer;
+
+		// Configure background music
+		this.snakeSound.loop = AUDIO.snakeSoundLoop;
+		this.snakeSound.volume = AUDIO.snakeSoundVolume;
+
 		this.create();
 	}
 
