@@ -19,9 +19,9 @@ describe('SnakeController - Characterization Tests', () => {
 		const mockSnakeBody = { width: 10, height: 10 };
 		const mockSnakeHead = { width: 10, height: 10 };
 
-		// Initialize cellWidth/cellheight and offsets for render to work
+		// Initialize cellWidth/cellHeight and offsets for render to work
 		boardController.cellWidth = 11;
-		boardController.cellheight = 11;
+		boardController.cellHeight = 11;
 		boardController.offsetX = 0;
 		boardController.offsetY = 0;
 
@@ -402,7 +402,7 @@ describe('SnakeController - Characterization Tests', () => {
 			const mockSnakeHead = { width: 10, height: 10 };
 
 			boardController.cellWidth = 11;
-			boardController.cellheight = 11;
+			boardController.cellHeight = 11;
 			boardController.offsetX = 0;
 			boardController.offsetY = 0;
 
@@ -432,7 +432,7 @@ describe('SnakeController - Characterization Tests', () => {
 			const mockSnakeHead = { width: 10, height: 10 };
 
 			boardController.cellWidth = 11;
-			boardController.cellheight = 11;
+			boardController.cellHeight = 11;
 			boardController.offsetX = 0;
 			boardController.offsetY = 0;
 
@@ -460,7 +460,7 @@ describe('SnakeController - Characterization Tests', () => {
 			const mockSnakeHead = { width: 10, height: 10 };
 
 			boardController.cellWidth = 11;
-			boardController.cellheight = 11;
+			boardController.cellHeight = 11;
 			boardController.offsetX = 0;
 			boardController.offsetY = 0;
 
@@ -487,7 +487,7 @@ describe('SnakeController - Characterization Tests', () => {
 			const mockSnakeHead = { width: 20, height: 20 };
 
 			boardController.cellWidth = 11;
-			boardController.cellheight = 11;
+			boardController.cellHeight = 11;
 			boardController.offsetX = 0;
 			boardController.offsetY = 0;
 
@@ -505,7 +505,7 @@ describe('SnakeController - Characterization Tests', () => {
 			expect(mockContext.translate).toHaveBeenCalledWith(10, 10);
 		});
 
-		it('should use cellheight property (typo) not cellHeight', () => {
+		it('should use cellHeight property (typo fixed in WO-012)', () => {
 			const mockContext = createMockCanvasContext();
 			global.requestAnimationFrame = vi.fn((cb) => cb());
 
@@ -514,7 +514,7 @@ describe('SnakeController - Characterization Tests', () => {
 
 			// Set typo'd property
 			boardController.cellWidth = 11;
-			boardController.cellheight = 15;
+			boardController.cellHeight = 15;
 			boardController.offsetX = 0;
 			boardController.offsetY = 0;
 
@@ -528,8 +528,8 @@ describe('SnakeController - Characterization Tests', () => {
 				mockSnakeHead
 			);
 
-			// Verify translate uses cellheight (typo) value
-			// First translate: cell.x * cellWidth + offsetX, cell.y * cellheight + offsetY
+			// Verify translate uses cellHeight value
+			// First translate: cell.x * cellWidth + offsetX, cell.y * cellHeight + offsetY
 			// 0 * 11 + 0 = 0, 1 * 15 + 0 = 15
 			expect(mockContext.translate).toHaveBeenCalledWith(0, 15);
 		});
