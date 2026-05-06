@@ -9,15 +9,15 @@
 export const GRID = Object.freeze({
 	width: 15,
 	height: 15,
-	cellSize: 10,
+	cellSize: 10, // Base cell size for rendering
 });
 
 /**
  * Game timing intervals (in milliseconds)
  */
 export const TIMING = Object.freeze({
-	tickInterval: 150,
-	bombInterval: 5000,
+	tickInterval: 150, // Game update interval
+	bombInterval: 5000, // Bomb spawn interval
 });
 
 /**
@@ -27,7 +27,7 @@ export const SNAKE = Object.freeze({
 	startCoords: Object.freeze([Object.freeze({ x: 3, y: 12 }), Object.freeze({ x: 3, y: 13 })]),
 	initialDirection: Object.freeze({
 		deltaX: 0,
-		deltaY: -1,
+		deltaY: -1, // Upward
 	}),
 	initialDegree: 180,
 });
@@ -70,5 +70,6 @@ export const AUDIO = Object.freeze({
 
 /**
  * Debug flag for verbose logging
+ * Set to true to enable console logging during development
  */
 export const DEBUG = false;
