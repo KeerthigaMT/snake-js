@@ -80,16 +80,12 @@ describe('BoardController - Characterization Tests', () => {
 				snake: { snakeCoords: [] },
 			};
 
-			const beforeFoodCount = boardController.board.cells.filter(
-				(c) => c.hasFood
-			).length;
+			const beforeFoodCount = boardController.board.cells.filter((c) => c.hasFood).length;
 			expect(beforeFoodCount).toBe(0);
 
 			boardController.addFood(mockSnakeController);
 
-			const afterFoodCount = boardController.board.cells.filter(
-				(c) => c.hasFood
-			).length;
+			const afterFoodCount = boardController.board.cells.filter((c) => c.hasFood).length;
 			expect(afterFoodCount).toBe(1);
 		});
 
@@ -113,16 +109,12 @@ describe('BoardController - Characterization Tests', () => {
 				snake: { snakeCoords: [] },
 			};
 
-			const beforeBombCount = boardController.board.cells.filter(
-				(c) => c.hasBomb
-			).length;
+			const beforeBombCount = boardController.board.cells.filter((c) => c.hasBomb).length;
 			expect(beforeBombCount).toBe(0);
 
 			boardController.addBomb(mockSnakeController);
 
-			const afterBombCount = boardController.board.cells.filter(
-				(c) => c.hasBomb
-			).length;
+			const afterBombCount = boardController.board.cells.filter((c) => c.hasBomb).length;
 			expect(afterBombCount).toBe(1);
 		});
 	});
@@ -159,9 +151,7 @@ describe('BoardController - Characterization Tests', () => {
 			expect(removeBombsSpy).toHaveBeenCalled();
 
 			// Verify only one bomb exists
-			const bombCount = boardController.board.cells.filter(
-				(c) => c.hasBomb
-			).length;
+			const bombCount = boardController.board.cells.filter((c) => c.hasBomb).length;
 			expect(bombCount).toBe(1);
 		});
 
@@ -191,9 +181,7 @@ describe('BoardController - Characterization Tests', () => {
 				}
 			});
 
-			const availableCell = boardController.getAvailableCell(
-				mockSnakeController
-			);
+			const availableCell = boardController.getAvailableCell(mockSnakeController);
 			expect(availableCell).toBeDefined();
 			expect(availableCell.hasFood).not.toBe(true);
 		});
@@ -210,9 +198,7 @@ describe('BoardController - Characterization Tests', () => {
 				}
 			});
 
-			const availableCell = boardController.getAvailableCell(
-				mockSnakeController
-			);
+			const availableCell = boardController.getAvailableCell(mockSnakeController);
 			expect(availableCell).toBeDefined();
 			expect(availableCell.hasBomb).not.toBe(true);
 		});
@@ -224,9 +210,7 @@ describe('BoardController - Characterization Tests', () => {
 				snake: { snakeCoords: [snakeCell1, snakeCell2] },
 			};
 
-			const availableCell = boardController.getAvailableCell(
-				mockSnakeController
-			);
+			const availableCell = boardController.getAvailableCell(mockSnakeController);
 			expect(availableCell).toBeDefined();
 			expect(availableCell).not.toBe(snakeCell1);
 			expect(availableCell).not.toBe(snakeCell2);
@@ -244,9 +228,7 @@ describe('BoardController - Characterization Tests', () => {
 				snake: { snakeCoords: [snakeCell] },
 			};
 
-			const availableCell = boardController.getAvailableCell(
-				mockSnakeController
-			);
+			const availableCell = boardController.getAvailableCell(mockSnakeController);
 			expect(availableCell).toBeDefined();
 			expect(availableCell).not.toBe(snakeCell);
 			expect(availableCell).not.toBe(foodCell);
@@ -294,30 +276,22 @@ describe('BoardController - Characterization Tests', () => {
 			boardController.getCell(5, 5).hasBomb = true;
 			boardController.getCell(14, 14).hasBomb = true;
 
-			const beforeCount = boardController.board.cells.filter(
-				(c) => c.hasBomb
-			).length;
+			const beforeCount = boardController.board.cells.filter((c) => c.hasBomb).length;
 			expect(beforeCount).toBe(3);
 
 			boardController.removeBombs();
 
-			const afterCount = boardController.board.cells.filter(
-				(c) => c.hasBomb
-			).length;
+			const afterCount = boardController.board.cells.filter((c) => c.hasBomb).length;
 			expect(afterCount).toBe(0);
 		});
 
 		it('should work correctly when no bombs exist', () => {
-			const beforeCount = boardController.board.cells.filter(
-				(c) => c.hasBomb
-			).length;
+			const beforeCount = boardController.board.cells.filter((c) => c.hasBomb).length;
 			expect(beforeCount).toBe(0);
 
 			boardController.removeBombs();
 
-			const afterCount = boardController.board.cells.filter(
-				(c) => c.hasBomb
-			).length;
+			const afterCount = boardController.board.cells.filter((c) => c.hasBomb).length;
 			expect(afterCount).toBe(0);
 		});
 	});
@@ -332,18 +306,12 @@ describe('BoardController - Characterization Tests', () => {
 			};
 
 			// Verify identity-based collision detection
-			expect(
-				mockSnakeController.snake.snakeCoords.includes(cell1)
-			).toBe(true);
-			expect(
-				mockSnakeController.snake.snakeCoords.includes(cell2)
-			).toBe(true);
+			expect(mockSnakeController.snake.snakeCoords.includes(cell1)).toBe(true);
+			expect(mockSnakeController.snake.snakeCoords.includes(cell2)).toBe(true);
 
 			// Verify a different cell with same coordinates is NOT included
 			const differentCell = { x: 3, y: 12 };
-			expect(
-				mockSnakeController.snake.snakeCoords.includes(differentCell)
-			).toBe(false);
+			expect(mockSnakeController.snake.snakeCoords.includes(differentCell)).toBe(false);
 		});
 
 		it('should use object reference equality, not value equality', () => {
@@ -355,16 +323,10 @@ describe('BoardController - Characterization Tests', () => {
 			};
 
 			// Same reference should be included
-			expect(
-				mockSnakeController.snake.snakeCoords.includes(boardCell)
-			).toBe(true);
+			expect(mockSnakeController.snake.snakeCoords.includes(boardCell)).toBe(true);
 
 			// Different object with same values should NOT be included
-			expect(
-				mockSnakeController.snake.snakeCoords.includes(
-					duplicateValueCell
-				)
-			).toBe(false);
+			expect(mockSnakeController.snake.snakeCoords.includes(duplicateValueCell)).toBe(false);
 		});
 	});
 
@@ -384,7 +346,7 @@ describe('BoardController - Characterization Tests', () => {
 			expect(mockContext.drawImage).toHaveBeenCalledTimes(225);
 		});
 
-		it('should calculate cellWidth and cellheight from cell dimensions', () => {
+		it('should calculate cellWidth and cellHeight from cell dimensions', () => {
 			const mockContext = createMockCanvasContext();
 			const mockCell = { width: 10, height: 10 };
 			const mockFood = {};
@@ -395,7 +357,7 @@ describe('BoardController - Characterization Tests', () => {
 			boardController.render(mockContext, mockCell, mockFood, mockBomb);
 
 			expect(boardController.cellWidth).toBe(11);
-			expect(boardController.cellheight).toBe(11);
+			expect(boardController.cellHeight).toBe(11);
 		});
 
 		it('should draw food when cell has hasFood=true', () => {
@@ -415,9 +377,7 @@ describe('BoardController - Characterization Tests', () => {
 			expect(mockContext.drawImage).toHaveBeenCalledTimes(226);
 
 			// Verify food was drawn with correct arguments
-			const foodCalls = mockContext.drawImage.mock.calls.filter(
-				(call) => call[0] === mockFood
-			);
+			const foodCalls = mockContext.drawImage.mock.calls.filter((call) => call[0] === mockFood);
 			expect(foodCalls).toHaveLength(1);
 		});
 
@@ -438,9 +398,7 @@ describe('BoardController - Characterization Tests', () => {
 			expect(mockContext.drawImage).toHaveBeenCalledTimes(226);
 
 			// Verify bomb was drawn with correct arguments
-			const bombCalls = mockContext.drawImage.mock.calls.filter(
-				(call) => call[0] === mockBomb
-			);
+			const bombCalls = mockContext.drawImage.mock.calls.filter((call) => call[0] === mockBomb);
 			expect(bombCalls).toHaveLength(1);
 		});
 
@@ -474,16 +432,16 @@ describe('BoardController - Characterization Tests', () => {
 
 			boardController.render(mockContext, mockCell, mockFood, mockBomb);
 
-			// cellWidth = 11, boadWidth = 15
+			// cellWidth = 11, boardWidth = 15
 			// offsetX = (800 - 11 * 15) / 2 = (800 - 165) / 2 = 317.5
 			expect(boardController.offsetX).toBe(317.5);
 
-			// cellheight = 11, boadHeight = 15
+			// cellHeight = 11, boardHeight = 15
 			// offsetY = (600 - 11 * 15) / 2 = (600 - 165) / 2 = 217.5
 			expect(boardController.offsetY).toBe(217.5);
 		});
 
-		it('should use typo property "cellheight" not "cellHeight"', () => {
+		it('should use correct property "cellHeight" (typo fixed in WO-012)', () => {
 			const mockContext = createMockCanvasContext();
 			const mockCell = { width: 10, height: 10 };
 			const mockFood = {};
@@ -493,9 +451,9 @@ describe('BoardController - Characterization Tests', () => {
 
 			boardController.render(mockContext, mockCell, mockFood, mockBomb);
 
-			// Verify the typo'd property exists
-			expect(boardController.cellheight).toBe(11);
-			expect(boardController.cellHeight).toBeUndefined();
+			// After WO-012: typo fixed, cellHeight is the correct property name
+			expect(boardController.cellHeight).toBe(11);
+			expect(boardController.cellheight).toBeUndefined();
 		});
 	});
 });

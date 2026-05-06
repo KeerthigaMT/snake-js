@@ -1,8 +1,5 @@
-/**
- * @class Snake
- * Represents the snake entity model.
- * Tracks the snake's position, movement state, and starting coordinates.
- */
+import { SNAKE } from '../constants.js';
+
 export default class Snake {
 	/**
 	 * Creates a new Snake instance and initializes its state.
@@ -18,10 +15,7 @@ export default class Snake {
 	init() {
 		this.isMoving = false;
 		this.snakeCoords = [];
-		this.snakeStartCoords = [
-			{ x: 3, y: 12 },
-			{ x: 3, y: 13 },
-		];
+		this.snakeStartCoords = SNAKE.startCoords;
 	}
 
 	/**

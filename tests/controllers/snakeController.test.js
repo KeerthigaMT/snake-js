@@ -19,9 +19,9 @@ describe('SnakeController - Characterization Tests', () => {
 		const mockSnakeBody = { width: 10, height: 10 };
 		const mockSnakeHead = { width: 10, height: 10 };
 
-		// Initialize cellWidth/cellheight and offsets for render to work
+		// Initialize cellWidth/cellHeight and offsets for render to work
 		boardController.cellWidth = 11;
-		boardController.cellheight = 11;
+		boardController.cellHeight = 11;
 		boardController.offsetX = 0;
 		boardController.offsetY = 0;
 
@@ -71,9 +71,7 @@ describe('SnakeController - Characterization Tests', () => {
 			const initialLength = snakeController.snake.snakeCoords.length;
 			snakeController.move();
 
-			expect(snakeController.snake.snakeCoords).toHaveLength(
-				initialLength
-			);
+			expect(snakeController.snake.snakeCoords).toHaveLength(initialLength);
 		});
 
 		it('should move snake forward when isMoving is true', () => {
@@ -83,9 +81,7 @@ describe('SnakeController - Characterization Tests', () => {
 			snakeController.move();
 
 			// Should still have same length (tail popped, head added)
-			expect(snakeController.snake.snakeCoords).toHaveLength(
-				initialLength
-			);
+			expect(snakeController.snake.snakeCoords).toHaveLength(initialLength);
 		});
 	});
 
@@ -265,9 +261,7 @@ describe('SnakeController - Characterization Tests', () => {
 			snakeController.move();
 
 			// Length should increase by 1 (no tail pop)
-			expect(snakeController.snake.snakeCoords).toHaveLength(
-				initialLength + 1
-			);
+			expect(snakeController.snake.snakeCoords).toHaveLength(initialLength + 1);
 			expect(snakeController.snake.snakeCoords).toContain(tail);
 			expect(snakeController.snake.snakeCoords).toContain(nextCell);
 		});
@@ -302,9 +296,7 @@ describe('SnakeController - Characterization Tests', () => {
 			snakeController.move();
 
 			// Check that some cell has food (new food added)
-			const foodExists = boardController.board.cells.some(
-				(c) => c.hasFood
-			);
+			const foodExists = boardController.board.cells.some((c) => c.hasFood);
 			expect(foodExists).toBe(true);
 		});
 	});
@@ -326,9 +318,7 @@ describe('SnakeController - Characterization Tests', () => {
 			snakeController.move();
 
 			// Length should remain same (tail popped, head added)
-			expect(snakeController.snake.snakeCoords).toHaveLength(
-				initialLength
-			);
+			expect(snakeController.snake.snakeCoords).toHaveLength(initialLength);
 			expect(snakeController.snake.snakeCoords).toContain(nextCell);
 			expect(snakeController.snake.snakeCoords).not.toContain(tail);
 		});
@@ -402,19 +392,14 @@ describe('SnakeController - Characterization Tests', () => {
 			const mockSnakeHead = { width: 10, height: 10 };
 
 			boardController.cellWidth = 11;
-			boardController.cellheight = 11;
+			boardController.cellHeight = 11;
 			boardController.offsetX = 0;
 			boardController.offsetY = 0;
 
 			const head = boardController.getCell(5, 5);
 			snakeController.snake.snakeCoords = [head];
 
-			snakeController.render(
-				mockContext,
-				boardController,
-				mockSnakeBody,
-				mockSnakeHead
-			);
+			snakeController.render(mockContext, boardController, mockSnakeBody, mockSnakeHead);
 
 			// Head should trigger: save, translate (2x), rotate, drawImage, restore
 			expect(mockContext.save).toHaveBeenCalled();
@@ -432,7 +417,7 @@ describe('SnakeController - Characterization Tests', () => {
 			const mockSnakeHead = { width: 10, height: 10 };
 
 			boardController.cellWidth = 11;
-			boardController.cellheight = 11;
+			boardController.cellHeight = 11;
 			boardController.offsetX = 0;
 			boardController.offsetY = 0;
 
@@ -441,12 +426,7 @@ describe('SnakeController - Characterization Tests', () => {
 			const body2 = boardController.getCell(5, 7);
 			snakeController.snake.snakeCoords = [head, body1, body2];
 
-			snakeController.render(
-				mockContext,
-				boardController,
-				mockSnakeBody,
-				mockSnakeHead
-			);
+			snakeController.render(mockContext, boardController, mockSnakeBody, mockSnakeHead);
 
 			// Should call drawImage 3 times (1 head + 2 body)
 			expect(mockContext.drawImage).toHaveBeenCalledTimes(3);
@@ -460,7 +440,7 @@ describe('SnakeController - Characterization Tests', () => {
 			const mockSnakeHead = { width: 10, height: 10 };
 
 			boardController.cellWidth = 11;
-			boardController.cellheight = 11;
+			boardController.cellHeight = 11;
 			boardController.offsetX = 0;
 			boardController.offsetY = 0;
 
@@ -468,12 +448,7 @@ describe('SnakeController - Characterization Tests', () => {
 			snakeController.snake.snakeCoords = [head];
 			snakeController.degree = 180;
 
-			snakeController.render(
-				mockContext,
-				boardController,
-				mockSnakeBody,
-				mockSnakeHead
-			);
+			snakeController.render(mockContext, boardController, mockSnakeBody, mockSnakeHead);
 
 			// Should rotate by (180 * Math.PI) / 180 = Math.PI
 			expect(mockContext.rotate).toHaveBeenCalledWith(Math.PI);
@@ -487,25 +462,20 @@ describe('SnakeController - Characterization Tests', () => {
 			const mockSnakeHead = { width: 20, height: 20 };
 
 			boardController.cellWidth = 11;
-			boardController.cellheight = 11;
+			boardController.cellHeight = 11;
 			boardController.offsetX = 0;
 			boardController.offsetY = 0;
 
 			const head = boardController.getCell(5, 5);
 			snakeController.snake.snakeCoords = [head];
 
-			snakeController.render(
-				mockContext,
-				boardController,
-				mockSnakeBody,
-				mockSnakeHead
-			);
+			snakeController.render(mockContext, boardController, mockSnakeBody, mockSnakeHead);
 
 			// Should translate by halfHeadSize (20/2 = 10) for pivot
 			expect(mockContext.translate).toHaveBeenCalledWith(10, 10);
 		});
 
-		it('should use cellheight property (typo) not cellHeight', () => {
+		it('should use cellHeight property (typo fixed in WO-012)', () => {
 			const mockContext = createMockCanvasContext();
 			global.requestAnimationFrame = vi.fn((cb) => cb());
 
@@ -514,22 +484,17 @@ describe('SnakeController - Characterization Tests', () => {
 
 			// Set typo'd property
 			boardController.cellWidth = 11;
-			boardController.cellheight = 15;
+			boardController.cellHeight = 15;
 			boardController.offsetX = 0;
 			boardController.offsetY = 0;
 
 			const head = boardController.getCell(0, 1);
 			snakeController.snake.snakeCoords = [head];
 
-			snakeController.render(
-				mockContext,
-				boardController,
-				mockSnakeBody,
-				mockSnakeHead
-			);
+			snakeController.render(mockContext, boardController, mockSnakeBody, mockSnakeHead);
 
-			// Verify translate uses cellheight (typo) value
-			// First translate: cell.x * cellWidth + offsetX, cell.y * cellheight + offsetY
+			// Verify translate uses cellHeight value
+			// First translate: cell.x * cellWidth + offsetX, cell.y * cellHeight + offsetY
 			// 0 * 11 + 0 = 0, 1 * 15 + 0 = 15
 			expect(mockContext.translate).toHaveBeenCalledWith(0, 15);
 		});

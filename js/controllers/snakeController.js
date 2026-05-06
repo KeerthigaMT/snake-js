@@ -1,4 +1,5 @@
 import Snake from '../models/snake.js';
+import { SNAKE } from '../constants.js';
 
 /**
  * @class SnakeController
@@ -26,10 +27,10 @@ export default class SnakeController {
 	 * @param {BoardController} boardController - The board controller instance for cell lookups
 	 */
 	init(boardController) {
-		this.deltaX = 0;
-		this.deltaY = -1;
+		this.deltaX = SNAKE.initialDirection.deltaX;
+		this.deltaY = SNAKE.initialDirection.deltaY;
 		this.snake = new Snake();
-		this.degree = 180;
+		this.degree = SNAKE.initialDegree;
 
 		for (let coord of this.snake.snakeStartCoords) {
 			let cell = boardController.getCell(coord.x, coord.y);
@@ -54,18 +55,18 @@ export default class SnakeController {
 					context.save();
 					context.translate(
 						cell.x * boardController.cellWidth + boardController.offsetX,
-						cell.y * boardController.cellheight + boardController.offsetY
+						cell.y * boardController.cellHeight + boardController.offsetY
 					);
 					context.translate(halfHeadSize, halfHeadSize);
 					context.rotate((this.degree * Math.PI) / 180);
 					context.drawImage(snakeHead, -halfHeadSize, -halfHeadSize);
 					context.restore();
 				} else {
-					context.drawImage(
-						snakeBody,
-						cell.x * boardController.cellWidth + boardController.offsetX,
-						cell.y * boardController.cellheight + boardController.offsetY
-					);
+				context.drawImage(
+					snakeBody,
+					cell.x * boardController.cellWidth + boardController.offsetX,
+					cell.y * boardController.cellHeight + boardController.offsetY
+				);
 				}
 			});
 		});
