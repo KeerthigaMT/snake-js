@@ -11,8 +11,8 @@ export default class Board {
 		this.boadHeight = GRID.height;
 	}
 	create() {
-		for (let x = 0; x < this.boadWidth; x++) {
-			for (let y = 0; y < this.boadHeight; y++) {
+		for (let x = 0; x < this.boardWidth; x++) {
+			for (let y = 0; y < this.boardHeight; y++) {
 				this.cells.push({ x, y });
 			}
 		}

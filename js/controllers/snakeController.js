@@ -26,18 +26,18 @@ export default class SnakeController {
 					context.save();
 					context.translate(
 						cell.x * boardController.cellWidth + boardController.offsetX,
-						cell.y * boardController.cellheight + boardController.offsetY
+						cell.y * boardController.cellHeight + boardController.offsetY
 					);
 					context.translate(halfHeadSize, halfHeadSize);
 					context.rotate((this.degree * Math.PI) / 180);
 					context.drawImage(snakeHead, -halfHeadSize, -halfHeadSize);
 					context.restore();
 				} else {
-					context.drawImage(
-						snakeBody,
-						cell.x * boardController.cellWidth + boardController.offsetX,
-						cell.y * boardController.cellheight + boardController.offsetY
-					);
+				context.drawImage(
+					snakeBody,
+					cell.x * boardController.cellWidth + boardController.offsetX,
+					cell.y * boardController.cellHeight + boardController.offsetY
+				);
 				}
 			});
 		});

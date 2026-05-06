@@ -346,7 +346,7 @@ describe('BoardController - Characterization Tests', () => {
 			expect(mockContext.drawImage).toHaveBeenCalledTimes(225);
 		});
 
-		it('should calculate cellWidth and cellheight from cell dimensions', () => {
+		it('should calculate cellWidth and cellHeight from cell dimensions', () => {
 			const mockContext = createMockCanvasContext();
 			const mockCell = { width: 10, height: 10 };
 			const mockFood = {};
@@ -357,7 +357,7 @@ describe('BoardController - Characterization Tests', () => {
 			boardController.render(mockContext, mockCell, mockFood, mockBomb);
 
 			expect(boardController.cellWidth).toBe(11);
-			expect(boardController.cellheight).toBe(11);
+			expect(boardController.cellHeight).toBe(11);
 		});
 
 		it('should draw food when cell has hasFood=true', () => {
@@ -432,16 +432,16 @@ describe('BoardController - Characterization Tests', () => {
 
 			boardController.render(mockContext, mockCell, mockFood, mockBomb);
 
-			// cellWidth = 11, boadWidth = 15
+			// cellWidth = 11, boardWidth = 15
 			// offsetX = (800 - 11 * 15) / 2 = (800 - 165) / 2 = 317.5
 			expect(boardController.offsetX).toBe(317.5);
 
-			// cellheight = 11, boadHeight = 15
+			// cellHeight = 11, boardHeight = 15
 			// offsetY = (600 - 11 * 15) / 2 = (600 - 165) / 2 = 217.5
 			expect(boardController.offsetY).toBe(217.5);
 		});
 
-		it('should use typo property "cellheight" not "cellHeight"', () => {
+		it('should use correct property "cellHeight" (typo fixed in WO-012)', () => {
 			const mockContext = createMockCanvasContext();
 			const mockCell = { width: 10, height: 10 };
 			const mockFood = {};
@@ -451,9 +451,9 @@ describe('BoardController - Characterization Tests', () => {
 
 			boardController.render(mockContext, mockCell, mockFood, mockBomb);
 
-			// Verify the typo'd property exists
-			expect(boardController.cellheight).toBe(11);
-			expect(boardController.cellHeight).toBeUndefined();
+			// After WO-012: typo fixed, cellHeight is the correct property name
+			expect(boardController.cellHeight).toBe(11);
+			expect(boardController.cellheight).toBeUndefined();
 		});
 	});
 });

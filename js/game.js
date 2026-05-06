@@ -131,8 +131,8 @@ export default class Game {
 		);
 	}
 	resizeCanvas() {
-		this.minWidth = (this.boardController.board.boadWidth + 1) * (this.cell.width + 1);
-		this.minHeight = (this.boardController.board.boadHeight + 1) * (this.cell.height + 1);
+		this.minWidth = (this.boardController.board.boardWidth + 1) * (this.cell.width + 1);
+		this.minHeight = (this.boardController.board.boardHeight + 1) * (this.cell.height + 1);
 		if (window.innerWidth / window.innerHeight > this.maxWidth / this.maxHeight) {
 			this.fitWidth();
 		} else {

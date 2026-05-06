@@ -9,28 +9,28 @@ export default class BoardController {
 	}
 	render(context, cell, food, bomb) {
 		this.cellWidth = cell.width + 1;
-		this.cellheight = cell.height + 1;
-		this.offsetX = (context.canvas.width - this.cellWidth * this.board.boadWidth) / 2;
-		this.offsetY = (context.canvas.height - this.cellheight * this.board.boadHeight) / 2;
+		this.cellHeight = cell.height + 1;
+		this.offsetX = (context.canvas.width - this.cellWidth * this.board.boardWidth) / 2;
+		this.offsetY = (context.canvas.height - this.cellHeight * this.board.boardHeight) / 2;
 		this.board.cells.forEach((cellCoords) => {
 			window.requestAnimationFrame(() => {
 				context.drawImage(
 					cell,
 					cellCoords.x * this.cellWidth + this.offsetX,
-					cellCoords.y * this.cellheight + this.offsetY
+					cellCoords.y * this.cellHeight + this.offsetY
 				);
 				if (cellCoords.hasFood) {
 					context.drawImage(
 						food,
 						cellCoords.x * this.cellWidth + this.offsetX,
-						cellCoords.y * this.cellheight + this.offsetY
+						cellCoords.y * this.cellHeight + this.offsetY
 					);
 				}
 				if (cellCoords.hasBomb) {
 					context.drawImage(
 						bomb,
 						cellCoords.x * this.cellWidth + this.offsetX,
-						cellCoords.y * this.cellheight + this.offsetY
+						cellCoords.y * this.cellHeight + this.offsetY
 					);
 				}
 			});
