@@ -1,3 +1,5 @@
+import { GRID } from '../constants.js';
+
 export default class Board {
 	constructor() {
 		this.init();
@@ -5,8 +7,8 @@ export default class Board {
 	}
 	init() {
 		this.cells = [];
-		this.boardWidth = 15;
-		this.boardHeight = 15;
+		this.boadWidth = GRID.width;
+		this.boadHeight = GRID.height;
 	}
 	create() {
 		for (let x = 0; x < this.boardWidth; x++) {
