@@ -1,5 +1,6 @@
 import BoardController from './controllers/boardController.js';
 import SnakeController from './controllers/snakeController.js';
+import InputHandler from './infrastructure/inputHandler.js';
 
 export default class Game {
 	constructor() {
@@ -100,35 +101,20 @@ export default class Game {
 		);
 		this.boardController.addObject(this.snakeController, 'food');
 		this.boardController.addObject(this.snakeController, 'bomb');
-		this.createListeners();
+		this.setupInputHandler();
 		this.createFont();
 	}
-	createListeners() {
-		let gameisStarted = false;
-		window.addEventListener('keydown', (e) => {
-			if (!gameisStarted) {
-				gameisStarted = true;
+	setupInputHandler() {
+		this.inputHandler = new InputHandler({
+			initialDirection: {
+				deltaX: this.snakeController.deltaX,
+				deltaY: this.snakeController.deltaY,
+				degree: this.snakeController.degree,
+			},
+			onFirstInput: () => {
+				this.snakeController.snake.startMoving();
 				this.start();
-			}
-			const { key } = e;
-			if (key === 'ArrowUp') {
-				this.snakeController.deltaX = 0;
-				this.snakeController.deltaY = -1;
-				this.snakeController.degree = 0;
-			} else if (key === 'ArrowDown') {
-				this.snakeController.deltaX = 0;
-				this.snakeController.deltaY = 1;
-				this.snakeController.degree = 180;
-			} else if (key === 'ArrowLeft') {
-				this.snakeController.deltaX = -1;
-				this.snakeController.deltaY = 0;
-				this.snakeController.degree = 270;
-			} else if (key === 'ArrowRight') {
-				this.snakeController.deltaX = 1;
-				this.snakeController.deltaY = 0;
-				this.snakeController.degree = 90;
-			}
-			this.snakeController.snake.startMoving();
+			},
 		});
 	}
 	createFont() {
@@ -174,6 +160,14 @@ export default class Game {
 		this.canvas.style.height = '100%';
 	}
 	update() {
+		// Consume direction from input queue if available
+		const newDirection = this.inputHandler.dequeue();
+		if (newDirection) {
+			this.snakeController.deltaX = newDirection.deltaX;
+			this.snakeController.deltaY = newDirection.deltaY;
+			this.snakeController.degree = newDirection.degree;
+		}
+
 		this.snakeController.move();
 		this.context.clearRect(0, 0, this.context.canvas.width, this.context.canvas.height);
 		this.drawBackground();

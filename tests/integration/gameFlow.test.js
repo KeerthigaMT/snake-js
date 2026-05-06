@@ -111,15 +111,11 @@ describe('Game Flow - Integration Tests', () => {
 			boardController.addObject(snakeController, 'bomb');
 
 			// Verify food exists
-			const foodExists = boardController.board.cells.some(
-				(c) => c.hasFood
-			);
+			const foodExists = boardController.board.cells.some((c) => c.hasFood);
 			expect(foodExists).toBe(true);
 
 			// Verify bomb exists
-			const bombExists = boardController.board.cells.some(
-				(c) => c.hasBomb
-			);
+			const bombExists = boardController.board.cells.some((c) => c.hasBomb);
 			expect(bombExists).toBe(true);
 		});
 	});
@@ -172,9 +168,7 @@ describe('Game Flow - Integration Tests', () => {
 			snakeController.move();
 
 			// Verify nothing changed
-			expect(snakeController.snake.snakeCoords).toHaveLength(
-				initialLength
-			);
+			expect(snakeController.snake.snakeCoords).toHaveLength(initialLength);
 			expect(snakeController.snake.snakeCoords[0]).toBe(initialHead);
 		});
 	});
@@ -204,9 +198,7 @@ describe('Game Flow - Integration Tests', () => {
 			snakeController.move();
 
 			// Verify snake grew (length increased)
-			expect(snakeController.snake.snakeCoords).toHaveLength(
-				initialLength + 1
-			);
+			expect(snakeController.snake.snakeCoords).toHaveLength(initialLength + 1);
 
 			// Verify playFood flag was set
 			expect(snakeController.playFood).toBe(true);
@@ -235,9 +227,7 @@ describe('Game Flow - Integration Tests', () => {
 			snakeController.move();
 
 			// Verify food still exists somewhere on board
-			const foodExists = boardController.board.cells.some(
-				(c) => c.hasFood
-			);
+			const foodExists = boardController.board.cells.some((c) => c.hasFood);
 			expect(foodExists).toBe(true);
 		});
 
@@ -252,6 +242,7 @@ describe('Game Flow - Integration Tests', () => {
 				{ width: 10, height: 10 },
 				{ width: 10, height: 10 }
 			);
+			game.inputHandler = { dequeue: vi.fn(() => null) };
 			game.foodSound = { play: vi.fn() };
 			game.bombSound = { play: vi.fn() };
 			game.background = { width: 10, height: 10 };
@@ -321,9 +312,7 @@ describe('Game Flow - Integration Tests', () => {
 			snakeController.move();
 
 			// Tail should still pop (length stays same)
-			expect(snakeController.snake.snakeCoords).toHaveLength(
-				initialLength
-			);
+			expect(snakeController.snake.snakeCoords).toHaveLength(initialLength);
 		});
 	});
 

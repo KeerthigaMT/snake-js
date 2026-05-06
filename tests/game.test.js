@@ -45,7 +45,15 @@ describe('Game - Characterization Tests', () => {
 			return { width: 10, height: 10, src: '', addEventListener: vi.fn() };
 		});
 		global.Audio = vi.fn(function () {
-			return { src: '', loop: false, volume: 1, load: vi.fn(), play: vi.fn(), pause: vi.fn(), addEventListener: vi.fn() };
+			return {
+				src: '',
+				loop: false,
+				volume: 1,
+				load: vi.fn(),
+				play: vi.fn(),
+				pause: vi.fn(),
+				addEventListener: vi.fn(),
+			};
 		});
 	});
 
@@ -109,6 +117,7 @@ describe('Game - Characterization Tests', () => {
 				playBomb: false,
 				gameOver: false,
 			};
+			game.inputHandler = { dequeue: vi.fn(() => null) };
 			game.foodSound = { play: vi.fn() };
 			game.bombSound = { play: vi.fn() };
 			game.background = { width: 10, height: 10 };
@@ -133,6 +142,7 @@ describe('Game - Characterization Tests', () => {
 				playBomb: false,
 				gameOver: false,
 			};
+			game.inputHandler = { dequeue: vi.fn(() => null) };
 			game.foodSound = { play: vi.fn() };
 			game.bombSound = { play: vi.fn() };
 			game.background = { width: 10, height: 10 };
@@ -226,6 +236,7 @@ describe('Game - Characterization Tests', () => {
 				playBomb: true,
 				gameOver: false,
 			};
+			game.inputHandler = { dequeue: vi.fn(() => null) };
 			game.foodSound = { play: vi.fn() };
 			game.bombSound = { play: vi.fn() };
 			game.background = { width: 10, height: 10 };
@@ -251,6 +262,7 @@ describe('Game - Characterization Tests', () => {
 				playBomb: false,
 				gameOver: false,
 			};
+			game.inputHandler = { dequeue: vi.fn(() => null) };
 			game.foodSound = { play: vi.fn() };
 			game.bombSound = { play: vi.fn() };
 			game.background = { width: 10, height: 10 };
@@ -277,6 +289,7 @@ describe('Game - Characterization Tests', () => {
 				playBomb: false,
 				gameOver: true,
 			};
+			game.inputHandler = { dequeue: vi.fn(() => null) };
 			game.foodSound = { play: vi.fn() };
 			game.bombSound = { play: vi.fn() };
 			game.background = { width: 10, height: 10 };
@@ -306,6 +319,7 @@ describe('Game - Characterization Tests', () => {
 				playBomb: false,
 				gameOver: false,
 			};
+			game.inputHandler = { dequeue: vi.fn(() => null) };
 			game.foodSound = { play: vi.fn() };
 			game.bombSound = { play: vi.fn() };
 			game.background = { width: 10, height: 10 };
@@ -336,6 +350,7 @@ describe('Game - Characterization Tests', () => {
 				playBomb: false,
 				gameOver: false,
 			};
+			game.inputHandler = { dequeue: vi.fn(() => null) };
 			game.foodSound = { play: vi.fn() };
 			game.bombSound = { play: vi.fn() };
 			game.background = { width: 10, height: 10 };
@@ -360,6 +375,7 @@ describe('Game - Characterization Tests', () => {
 				playBomb: false,
 				gameOver: false,
 			};
+			game.inputHandler = { dequeue: vi.fn(() => null) };
 			game.foodSound = { play: vi.fn() };
 			game.bombSound = { play: vi.fn() };
 			game.background = { width: 10, height: 10 };
