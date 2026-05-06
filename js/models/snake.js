@@ -1,3 +1,5 @@
+import { SNAKE } from '../constants.js';
+
 export default class Snake {
 	constructor() {
 		this.init();
@@ -5,10 +7,7 @@ export default class Snake {
 	init() {
 		this.isMoving = false;
 		this.snakeCoords = [];
-		this.snakeStartCoords = [
-			{ x: 3, y: 12 },
-			{ x: 3, y: 13 },
-		];
+		this.snakeStartCoords = SNAKE.startCoords;
 	}
 	startMoving() {
 		this.isMoving = true;

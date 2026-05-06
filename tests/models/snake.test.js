@@ -128,16 +128,19 @@ describe('Snake Model - Characterization Tests', () => {
 	});
 
 	describe('snakeStartCoords Immutability', () => {
-		it('should have snakeStartCoords that can be modified without affecting next init()', () => {
-			// Modify snakeStartCoords
+		it('should have frozen snakeStartCoords that cannot be modified', () => {
+			// After WO-011: snakeStartCoords now references frozen constants
+			// Attempting to modify should throw TypeError
 			const originalCoords = [
 				{ x: 3, y: 12 },
 				{ x: 3, y: 13 },
 			];
-			snake.snakeStartCoords[0].x = 999;
 
-			// Call init() should reset to original hardcoded values
-			snake.init();
+			expect(() => {
+				snake.snakeStartCoords[0].x = 999;
+			}).toThrow(TypeError);
+
+			// Coordinates remain unchanged
 			expect(snake.snakeStartCoords).toEqual(originalCoords);
 		});
 	});
