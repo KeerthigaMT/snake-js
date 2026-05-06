@@ -1,5 +1,6 @@
 import BoardController from './controllers/boardController.js';
 import SnakeController from './controllers/snakeController.js';
+import GameLoop from './infrastructure/gameLoop.js';
 
 export default class Game {
 	constructor() {
@@ -100,8 +101,15 @@ export default class Game {
 		);
 		this.boardController.addObject(this.snakeController, 'food');
 		this.boardController.addObject(this.snakeController, 'bomb');
+		this.setupGameLoop();
 		this.createListeners();
 		this.createFont();
+	}
+	setupGameLoop() {
+		this.gameLoop = new GameLoop({
+			updateFn: () => this.update(),
+			tickInterval: 150,
+		});
 	}
 	createListeners() {
 		let gameisStarted = false;
@@ -196,9 +204,7 @@ export default class Game {
 	}
 	start() {
 		this.snakeSound.play();
-		this.updateInterval = setInterval(() => {
-			this.update();
-		}, 150);
+		this.gameLoop.start();
 		this.bombInterval = setInterval(() => {
 			this.boardController.addObject(this.snakeController, 'bomb');
 		}, 5000);
@@ -207,7 +213,7 @@ export default class Game {
 	gameOver() {
 		this.snakeSound.pause();
 		this.gameOverSound.play();
-		clearInterval(this.updateInterval);
+		this.gameLoop.stop();
 		clearInterval(this.bombInterval);
 		alert('Game Over');
 		window.location.reload();

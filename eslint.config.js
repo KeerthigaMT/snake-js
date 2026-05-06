@@ -15,10 +15,12 @@ export default [
 				Audio: 'readonly',
 				console: 'readonly',
 				requestAnimationFrame: 'readonly',
+				cancelAnimationFrame: 'readonly',
 				addEventListener: 'readonly',
 				setInterval: 'readonly',
 				clearInterval: 'readonly',
 				alert: 'readonly',
+				performance: 'readonly',
 			},
 		},
 		rules: {

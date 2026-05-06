@@ -111,15 +111,11 @@ describe('Game Flow - Integration Tests', () => {
 			boardController.addObject(snakeController, 'bomb');
 
 			// Verify food exists
-			const foodExists = boardController.board.cells.some(
-				(c) => c.hasFood
-			);
+			const foodExists = boardController.board.cells.some((c) => c.hasFood);
 			expect(foodExists).toBe(true);
 
 			// Verify bomb exists
-			const bombExists = boardController.board.cells.some(
-				(c) => c.hasBomb
-			);
+			const bombExists = boardController.board.cells.some((c) => c.hasBomb);
 			expect(bombExists).toBe(true);
 		});
 	});
@@ -172,9 +168,7 @@ describe('Game Flow - Integration Tests', () => {
 			snakeController.move();
 
 			// Verify nothing changed
-			expect(snakeController.snake.snakeCoords).toHaveLength(
-				initialLength
-			);
+			expect(snakeController.snake.snakeCoords).toHaveLength(initialLength);
 			expect(snakeController.snake.snakeCoords[0]).toBe(initialHead);
 		});
 	});
@@ -204,9 +198,7 @@ describe('Game Flow - Integration Tests', () => {
 			snakeController.move();
 
 			// Verify snake grew (length increased)
-			expect(snakeController.snake.snakeCoords).toHaveLength(
-				initialLength + 1
-			);
+			expect(snakeController.snake.snakeCoords).toHaveLength(initialLength + 1);
 
 			// Verify playFood flag was set
 			expect(snakeController.playFood).toBe(true);
@@ -235,9 +227,7 @@ describe('Game Flow - Integration Tests', () => {
 			snakeController.move();
 
 			// Verify food still exists somewhere on board
-			const foodExists = boardController.board.cells.some(
-				(c) => c.hasFood
-			);
+			const foodExists = boardController.board.cells.some((c) => c.hasFood);
 			expect(foodExists).toBe(true);
 		});
 
@@ -321,9 +311,7 @@ describe('Game Flow - Integration Tests', () => {
 			snakeController.move();
 
 			// Tail should still pop (length stays same)
-			expect(snakeController.snake.snakeCoords).toHaveLength(
-				initialLength
-			);
+			expect(snakeController.snake.snakeCoords).toHaveLength(initialLength);
 		});
 	});
 
@@ -488,7 +476,7 @@ describe('Game Flow - Integration Tests', () => {
 			const game = new Game();
 			game.snakeSound = { pause: vi.fn() };
 			game.gameOverSound = { play: vi.fn() };
-			game.updateInterval = 123;
+			game.gameLoop = { start: vi.fn(), stop: vi.fn(), isRunning: vi.fn(() => true) };
 			game.bombInterval = 456;
 
 			game.gameOver();
@@ -496,7 +484,7 @@ describe('Game Flow - Integration Tests', () => {
 			// Verify cleanup
 			expect(game.snakeSound.pause).toHaveBeenCalled();
 			expect(game.gameOverSound.play).toHaveBeenCalled();
-			expect(global.clearInterval).toHaveBeenCalledWith(123);
+			expect(game.gameLoop.stop).toHaveBeenCalled();
 			expect(global.clearInterval).toHaveBeenCalledWith(456);
 			expect(global.alert).toHaveBeenCalledWith('Game Over');
 			expect(window.location.reload).toHaveBeenCalled();

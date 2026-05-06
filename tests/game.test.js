@@ -45,7 +45,15 @@ describe('Game - Characterization Tests', () => {
 			return { width: 10, height: 10, src: '', addEventListener: vi.fn() };
 		});
 		global.Audio = vi.fn(function () {
-			return { src: '', loop: false, volume: 1, load: vi.fn(), play: vi.fn(), pause: vi.fn(), addEventListener: vi.fn() };
+			return {
+				src: '',
+				loop: false,
+				volume: 1,
+				load: vi.fn(),
+				play: vi.fn(),
+				pause: vi.fn(),
+				addEventListener: vi.fn(),
+			};
 		});
 	});
 
@@ -148,19 +156,20 @@ describe('Game - Characterization Tests', () => {
 	});
 
 	describe('Game intervals - start()', () => {
-		it('should set up update interval with 150ms delay', () => {
+		it('should start the game loop', () => {
 			const game = new Game();
 			game.snakeSound = { play: vi.fn() };
+			game.gameLoop = { start: vi.fn(), stop: vi.fn(), isRunning: vi.fn(() => false) };
 
-			global.setInterval.mockClear();
 			game.start();
 
-			expect(global.setInterval).toHaveBeenCalledWith(expect.any(Function), 150);
+			expect(game.gameLoop.start).toHaveBeenCalled();
 		});
 
 		it('should set up bomb interval with 5000ms delay', () => {
 			const game = new Game();
 			game.snakeSound = { play: vi.fn() };
+			game.gameLoop = { start: vi.fn(), stop: vi.fn(), isRunning: vi.fn(() => false) };
 
 			global.setInterval.mockClear();
 			game.start();
@@ -168,29 +177,29 @@ describe('Game - Characterization Tests', () => {
 			expect(global.setInterval).toHaveBeenCalledWith(expect.any(Function), 5000);
 		});
 
-		it('should store updateInterval and bombInterval IDs', () => {
+		it('should store bombInterval ID', () => {
 			const game = new Game();
 			game.snakeSound = { play: vi.fn() };
+			game.gameLoop = { start: vi.fn(), stop: vi.fn(), isRunning: vi.fn(() => false) };
 
 			game.start();
 
-			expect(game.updateInterval).toBeDefined();
 			expect(game.bombInterval).toBeDefined();
 		});
 	});
 
 	describe('Game over - gameOver() method', () => {
-		it('should clear both update and bomb intervals', () => {
+		it('should stop game loop and clear bomb interval', () => {
 			const game = new Game();
 			game.snakeSound = { pause: vi.fn() };
 			game.gameOverSound = { play: vi.fn() };
-			game.updateInterval = 123;
+			game.gameLoop = { start: vi.fn(), stop: vi.fn(), isRunning: vi.fn(() => true) };
 			game.bombInterval = 456;
 
 			global.clearInterval.mockClear();
 			game.gameOver();
 
-			expect(global.clearInterval).toHaveBeenCalledWith(123);
+			expect(game.gameLoop.stop).toHaveBeenCalled();
 			expect(global.clearInterval).toHaveBeenCalledWith(456);
 		});
 
@@ -198,6 +207,7 @@ describe('Game - Characterization Tests', () => {
 			const game = new Game();
 			game.snakeSound = { pause: vi.fn() };
 			game.gameOverSound = { play: vi.fn() };
+			game.gameLoop = { start: vi.fn(), stop: vi.fn(), isRunning: vi.fn(() => true) };
 
 			game.gameOver();
 
@@ -208,6 +218,7 @@ describe('Game - Characterization Tests', () => {
 			const game = new Game();
 			game.snakeSound = { pause: vi.fn() };
 			game.gameOverSound = { play: vi.fn() };
+			game.gameLoop = { start: vi.fn(), stop: vi.fn(), isRunning: vi.fn(() => true) };
 
 			game.gameOver();
 
@@ -277,6 +288,8 @@ describe('Game - Characterization Tests', () => {
 				playBomb: false,
 				gameOver: true,
 			};
+			game.inputHandler = { dequeue: vi.fn(() => null) };
+			game.gameLoop = { start: vi.fn(), stop: vi.fn(), isRunning: vi.fn(() => true) };
 			game.foodSound = { play: vi.fn() };
 			game.bombSound = { play: vi.fn() };
 			game.background = { width: 10, height: 10 };
