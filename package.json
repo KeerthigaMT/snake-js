@@ -1,0 +1,34 @@
+{
+  "name": "snake-js",
+  "version": "2.0.0",
+  "description": "Classic Snake game built with pure JavaScript - modernized with comprehensive testing and build tooling",
+  "type": "module",
+  "license": "MIT",
+  "author": "jsdevspace",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/jsdevspace/snake-js.git"
+  },
+  "scripts": {
+    "test": "vitest run",
+    "test:watch": "vitest",
+    "test:coverage": "vitest run --coverage",
+    "test:ui": "vitest --ui"
+  },
+  "keywords": [
+    "snake",
+    "game",
+    "javascript",
+    "canvas",
+    "browser-game"
+  ],
+  "devDependencies": {
+    "@vitest/coverage-v8": "^4.0.0",
+    "@vitest/ui": "^4.0.0",
+    "jsdom": "^24.0.0",
+    "vitest": "^4.0.0"
+  },
+  "engines": {
+    "node": ">=18.0.0"
+  }
+}
