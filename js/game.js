@@ -1,5 +1,7 @@
 import BoardController from './controllers/boardController.js';
 import SnakeController from './controllers/snakeController.js';
+import AssetLoader from './infrastructure/assetLoader.js';
+import AudioManager from './infrastructure/audioManager.js';
 import { CANVAS, TIMING, ASSETS, AUDIO } from './constants.js';
 
 /**
@@ -47,15 +49,13 @@ export default class Game {
 		this.snakeHead = images.snakeHead;
 		this.bomb = images.bomb;
 
-		// Assign loaded sounds
-		this.bombSound = sounds.bomb;
-		this.foodSound = sounds.food;
-		this.gameOverSound = sounds.gameOver;
-		this.snakeSound = sounds.snakeCharmer;
-
-		// Configure background music
-		this.snakeSound.loop = AUDIO.snakeSoundLoop;
-		this.snakeSound.volume = AUDIO.snakeSoundVolume;
+		// Create sounds map for AudioManager
+		this.sounds = {
+			bomb: sounds.bomb,
+			food: sounds.food,
+			gameOver: sounds.gameOver,
+			background: sounds.snakeCharmer,
+		};
 
 		this.create();
 	}
@@ -140,6 +140,7 @@ export default class Game {
 	 * and sets up event listeners. Called after all assets are loaded.
 	 */
 	create() {
+		this.audioManager = new AudioManager({ sounds: this.sounds || {} });
 		this.boardController = new BoardController();
 		this.resizeCanvas();
 		this.snakeController = new SnakeController(
@@ -263,12 +264,12 @@ export default class Game {
 		this.createScore();
 
 		if (this.snakeController.playBomb) {
-			this.bombSound.play();
+			this.audioManager.playEffect('bomb');
 			this.snakeController.playBomb = false;
 		}
 		if (this.snakeController.playFood) {
 			this.score++;
-			this.foodSound.play();
+			this.audioManager.playEffect('food');
 			this.snakeController.playFood = false;
 		}
 		if (this.snakeController.gameOver) {
@@ -280,7 +281,7 @@ export default class Game {
 	 * Update interval runs at 150ms (game speed). Bomb spawn interval at 5000ms.
 	 */
 	start() {
-		this.snakeSound.play();
+		this.audioManager.playMusic('background');
 		this.updateInterval = setInterval(() => {
 			this.update();
 		}, TIMING.tickInterval);
@@ -294,8 +295,8 @@ export default class Game {
 	 * showing alert, and reloading the page to restart.
 	 */
 	gameOver() {
-		this.snakeSound.pause();
-		this.gameOverSound.play();
+		this.audioManager.stopMusic();
+		this.audioManager.playEffect('gameOver');
 		clearInterval(this.updateInterval);
 		clearInterval(this.bombInterval);
 		alert('Game Over');

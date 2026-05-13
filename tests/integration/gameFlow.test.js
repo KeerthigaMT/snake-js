@@ -242,8 +242,11 @@ describe('Game Flow - Integration Tests', () => {
 				{ width: 10, height: 10 },
 				{ width: 10, height: 10 }
 			);
-			game.foodSound = { play: vi.fn() };
-			game.bombSound = { play: vi.fn() };
+			game.audioManager = {
+				playEffect: vi.fn(),
+				playMusic: vi.fn(),
+				stopMusic: vi.fn(),
+			};
 			game.background = { width: 10, height: 10 };
 			game.cell = { width: 10, height: 10 };
 			game.food = {};
@@ -474,16 +477,19 @@ describe('Game Flow - Integration Tests', () => {
 	describe('Game restart flow', () => {
 		it('should call gameOver methods and reload window', () => {
 			const game = new Game();
-			game.snakeSound = { pause: vi.fn() };
-			game.gameOverSound = { play: vi.fn() };
+			game.audioManager = {
+				playEffect: vi.fn(),
+				playMusic: vi.fn(),
+				stopMusic: vi.fn(),
+			};
 			game.updateInterval = 123;
 			game.bombInterval = 456;
 
 			game.gameOver();
 
 			// Verify cleanup
-			expect(game.snakeSound.pause).toHaveBeenCalled();
-			expect(game.gameOverSound.play).toHaveBeenCalled();
+			expect(game.audioManager.stopMusic).toHaveBeenCalled();
+			expect(game.audioManager.playEffect).toHaveBeenCalledWith('gameOver');
 			expect(global.clearInterval).toHaveBeenCalledWith(123);
 			expect(global.clearInterval).toHaveBeenCalledWith(456);
 			expect(global.alert).toHaveBeenCalledWith('Game Over');

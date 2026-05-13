@@ -108,7 +108,6 @@ describe('Game - Characterization Tests', () => {
 	describe('Scoring - increment behavior', () => {
 		it('should increment score when playFood flag is set', () => {
 			const game = new Game();
-			// Manually set up game state
 			game.boardController = new BoardController();
 			game.snakeController = {
 				move: vi.fn(),
@@ -117,8 +116,11 @@ describe('Game - Characterization Tests', () => {
 				playBomb: false,
 				gameOver: false,
 			};
-			game.foodSound = { play: vi.fn() };
-			game.bombSound = { play: vi.fn() };
+			game.audioManager = {
+				playEffect: vi.fn(),
+				playMusic: vi.fn(),
+				stopMusic: vi.fn(),
+			};
 			game.background = { width: 10, height: 10 };
 			game.cell = { width: 10, height: 10 };
 			game.food = {};
@@ -141,8 +143,11 @@ describe('Game - Characterization Tests', () => {
 				playBomb: false,
 				gameOver: false,
 			};
-			game.foodSound = { play: vi.fn() };
-			game.bombSound = { play: vi.fn() };
+			game.audioManager = {
+				playEffect: vi.fn(),
+				playMusic: vi.fn(),
+				stopMusic: vi.fn(),
+			};
 			game.background = { width: 10, height: 10 };
 			game.cell = { width: 10, height: 10 };
 			game.food = {};
@@ -158,7 +163,11 @@ describe('Game - Characterization Tests', () => {
 	describe('Game intervals - start()', () => {
 		it('should set up update interval with 150ms delay', () => {
 			const game = new Game();
-			game.snakeSound = { play: vi.fn() };
+			game.audioManager = {
+				playEffect: vi.fn(),
+				playMusic: vi.fn(),
+				stopMusic: vi.fn(),
+			};
 
 			global.setInterval.mockClear();
 			game.start();
@@ -168,7 +177,11 @@ describe('Game - Characterization Tests', () => {
 
 		it('should set up bomb interval with 5000ms delay', () => {
 			const game = new Game();
-			game.snakeSound = { play: vi.fn() };
+			game.audioManager = {
+				playEffect: vi.fn(),
+				playMusic: vi.fn(),
+				stopMusic: vi.fn(),
+			};
 
 			global.setInterval.mockClear();
 			game.start();
@@ -178,7 +191,11 @@ describe('Game - Characterization Tests', () => {
 
 		it('should store updateInterval and bombInterval IDs', () => {
 			const game = new Game();
-			game.snakeSound = { play: vi.fn() };
+			game.audioManager = {
+				playEffect: vi.fn(),
+				playMusic: vi.fn(),
+				stopMusic: vi.fn(),
+			};
 
 			game.start();
 
@@ -190,8 +207,11 @@ describe('Game - Characterization Tests', () => {
 	describe('Game over - gameOver() method', () => {
 		it('should clear both update and bomb intervals', () => {
 			const game = new Game();
-			game.snakeSound = { pause: vi.fn() };
-			game.gameOverSound = { play: vi.fn() };
+			game.audioManager = {
+				playEffect: vi.fn(),
+				playMusic: vi.fn(),
+				stopMusic: vi.fn(),
+			};
 			game.updateInterval = 123;
 			game.bombInterval = 456;
 
@@ -204,8 +224,11 @@ describe('Game - Characterization Tests', () => {
 
 		it('should show alert with "Game Over" message', () => {
 			const game = new Game();
-			game.snakeSound = { pause: vi.fn() };
-			game.gameOverSound = { play: vi.fn() };
+			game.audioManager = {
+				playEffect: vi.fn(),
+				playMusic: vi.fn(),
+				stopMusic: vi.fn(),
+			};
 
 			game.gameOver();
 
@@ -214,8 +237,11 @@ describe('Game - Characterization Tests', () => {
 
 		it('should reload window location', () => {
 			const game = new Game();
-			game.snakeSound = { pause: vi.fn() };
-			game.gameOverSound = { play: vi.fn() };
+			game.audioManager = {
+				playEffect: vi.fn(),
+				playMusic: vi.fn(),
+				stopMusic: vi.fn(),
+			};
 
 			game.gameOver();
 
@@ -234,8 +260,11 @@ describe('Game - Characterization Tests', () => {
 				playBomb: true,
 				gameOver: false,
 			};
-			game.foodSound = { play: vi.fn() };
-			game.bombSound = { play: vi.fn() };
+			game.audioManager = {
+				playEffect: vi.fn(),
+				playMusic: vi.fn(),
+				stopMusic: vi.fn(),
+			};
 			game.background = { width: 10, height: 10 };
 			game.cell = { width: 10, height: 10 };
 			game.food = {};
@@ -245,7 +274,7 @@ describe('Game - Characterization Tests', () => {
 
 			game.update();
 
-			expect(game.bombSound.play).toHaveBeenCalled();
+			expect(game.audioManager.playEffect).toHaveBeenCalledWith('bomb');
 			expect(game.snakeController.playBomb).toBe(false);
 		});
 
@@ -259,8 +288,11 @@ describe('Game - Characterization Tests', () => {
 				playBomb: false,
 				gameOver: false,
 			};
-			game.foodSound = { play: vi.fn() };
-			game.bombSound = { play: vi.fn() };
+			game.audioManager = {
+				playEffect: vi.fn(),
+				playMusic: vi.fn(),
+				stopMusic: vi.fn(),
+			};
 			game.background = { width: 10, height: 10 };
 			game.cell = { width: 10, height: 10 };
 			game.food = {};
@@ -270,7 +302,7 @@ describe('Game - Characterization Tests', () => {
 
 			game.update();
 
-			expect(game.foodSound.play).toHaveBeenCalled();
+			expect(game.audioManager.playEffect).toHaveBeenCalledWith('food');
 		});
 	});
 
@@ -285,16 +317,17 @@ describe('Game - Characterization Tests', () => {
 				playBomb: false,
 				gameOver: true,
 			};
-			game.foodSound = { play: vi.fn() };
-			game.bombSound = { play: vi.fn() };
+			game.audioManager = {
+				playEffect: vi.fn(),
+				playMusic: vi.fn(),
+				stopMusic: vi.fn(),
+			};
 			game.background = { width: 10, height: 10 };
 			game.cell = { width: 10, height: 10 };
 			game.food = {};
 			game.bomb = {};
 			game.snakeBody = {};
 			game.snakeHead = {};
-			game.snakeSound = { pause: vi.fn() };
-			game.gameOverSound = { play: vi.fn() };
 
 			const gameOverSpy = vi.spyOn(game, 'gameOver');
 			game.update();
@@ -314,8 +347,11 @@ describe('Game - Characterization Tests', () => {
 				playBomb: false,
 				gameOver: false,
 			};
-			game.foodSound = { play: vi.fn() };
-			game.bombSound = { play: vi.fn() };
+			game.audioManager = {
+				playEffect: vi.fn(),
+				playMusic: vi.fn(),
+				stopMusic: vi.fn(),
+			};
 			game.background = { width: 10, height: 10 };
 			game.cell = { width: 10, height: 10 };
 			game.food = {};
@@ -344,8 +380,11 @@ describe('Game - Characterization Tests', () => {
 				playBomb: false,
 				gameOver: false,
 			};
-			game.foodSound = { play: vi.fn() };
-			game.bombSound = { play: vi.fn() };
+			game.audioManager = {
+				playEffect: vi.fn(),
+				playMusic: vi.fn(),
+				stopMusic: vi.fn(),
+			};
 			game.background = { width: 10, height: 10 };
 			game.cell = { width: 10, height: 10 };
 			game.food = {};
@@ -368,8 +407,11 @@ describe('Game - Characterization Tests', () => {
 				playBomb: false,
 				gameOver: false,
 			};
-			game.foodSound = { play: vi.fn() };
-			game.bombSound = { play: vi.fn() };
+			game.audioManager = {
+				playEffect: vi.fn(),
+				playMusic: vi.fn(),
+				stopMusic: vi.fn(),
+			};
 			game.background = { width: 10, height: 10 };
 			game.cell = { width: 10, height: 10 };
 			game.food = {};

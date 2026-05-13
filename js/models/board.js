@@ -14,8 +14,8 @@ export default class Board {
 	 */
 	init() {
 		this.cells = [];
-		this.boadWidth = GRID.width;
-		this.boadHeight = GRID.height;
+		this.boardWidth = GRID.width;
+		this.boardHeight = GRID.height;
 	}
 
 	/**
